@@ -40,6 +40,15 @@ object List {
     // case Cons(h, t) if !f(h) => Cons(h, dropWhile(t, f)) more like filter
     case Cons(h, t) if !f(h) => l
   }
+
+  def foldRight[A, B](as: List[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil => z
+    case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+  }
+
+  def length[A](as: List[A]): Int =  {
+    foldRight(as, 0)((x, y) => y + 1)
+  }
      
 }
 
@@ -67,6 +76,9 @@ object Main {
     val filterFunction = isOdd
     val filteredIntArray = List.dropWhile(intArray, filterFunction)
     println(s"applied filterFunction to intArray, got $filteredIntArray")
+
+    val arrayLength = List.length(intArray)
+    println(s"Length of intArray, is $arrayLength")
     
     
   }
