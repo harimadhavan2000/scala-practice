@@ -22,6 +22,11 @@ object List {
     case Nil => Nil
     case Cons(_, t) => t
   }
+
+  def setHead[A](as: List[A], replacer: A): List[A] = as match {
+    case Nil =>  Nil
+    case Cons(h, t) => Cons(replacer, t)
+  }
      
 }
 
@@ -33,5 +38,9 @@ object Main {
 
     val tailVariable = List.tail(intArray)
     println(s"The tail of intArray is: $tailVariable")
+
+    val replacer: Int  = 6
+    val replacedArray = List.setHead(intArray, replacer)
+    println(s"Replaced the head of intArray with $replacer, got $replacedArray")
   }
 }
