@@ -27,6 +27,12 @@ object List {
     case Nil =>  Nil
     case Cons(h, t) => Cons(replacer, t)
   }
+
+  def drop[A](l: List[A], n: Int): List[A] = (l, n) match {
+    case (Nil, _ ) => Nil
+    case (l, 0)  => l
+    case (Cons(h, t), n) => drop(t, n - 1)
+  }
      
 }
 
@@ -42,5 +48,9 @@ object Main {
     val replacer: Int  = 6
     val replacedArray = List.setHead(intArray, replacer)
     println(s"Replaced the head of intArray with $replacer, got $replacedArray")
+
+    val dropQuantity: Int  = 2
+    val droppedArray = List.drop(intArray, dropQuantity)
+    println(s"Dropped the head of intArray  $dropQuantity times, got $droppedArray")
   }
 }
