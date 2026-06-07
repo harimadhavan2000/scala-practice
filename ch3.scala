@@ -49,6 +49,35 @@ object List {
   def length[A](as: List[A]): Int =  {
     foldRight(as, 0)((x, y) => y + 1)
   }
+
+  // redundant
+  def helper[A, B](as: List[A], z: B)(f: (A, B) => B)(acc: B): B = as match {
+      case Nil => acc
+      case Cons(h, t) => helper(t, z)(f)(f(h,  acc))
+    }
+  
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+    
+    case Nil => z
+    // case Cons(x, xs) => helper(as, z)(f)(z)
+    case Cons(x, xs) => foldLeft(xs , f(z, x))(f)
+  }
+
+  def sum2(ns: List[Int]) = {
+    foldRight(ns, 0)(_ + _)
+  }
+
+  def product2(ns: List[Int]) = {
+    foldRight(ns, 1)(_ * _)
+  }
+
+  def sum3(ns: List[Int]) = {
+    foldLeft(ns, 0)(_ + _)
+  }
+
+  def product3(ns: List[Int]) = {
+    foldLeft(ns, 1)(_ * _)
+  }
      
 }
 
@@ -79,6 +108,18 @@ object Main {
 
     val arrayLength = List.length(intArray)
     println(s"Length of intArray, is $arrayLength")
+
+    val sum2Value = List.sum2(intArray)
+    println(s"Sum of intArray using sum2, is $sum2Value")
+
+    val pdt2Value = List.product2(intArray)
+    println(s"Product of intArray using product2, is $pdt2Value")
+
+    val sum3Value = List.sum3(intArray)
+    println(s"Sum of intArray using sum3, is $sum3Value")
+
+    val pdt3Value = List.product3(intArray)
+    println(s"Product of intArray using product3, is $pdt3Value")
     
     
   }
