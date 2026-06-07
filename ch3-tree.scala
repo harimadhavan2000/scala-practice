@@ -9,6 +9,16 @@ object Tree {
     case Branch(left, right) => size(left) + size(right) + 1
   }
 
+  def maximum(tree: Tree[Int]): Int = tree match {
+    case Leaf(value) => value
+    case Branch(left, right) => maximum(left) max maximum(right)
+  }
+
+  def depth[A](tree: Tree[A]): Int = tree match{
+    case Leaf(value) => 0
+    case Branch(left, right) => 1 + (depth(left) max depth(right))
+  }
+
 }
 
 object TreeApp {
@@ -22,6 +32,8 @@ object TreeApp {
       Leaf(3)
     )
     println(Tree.size(sampleTree))
+    println(Tree.maximum(sampleTree))
+    println(Tree.depth(sampleTree))
 
   }
 }
