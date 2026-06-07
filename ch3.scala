@@ -33,10 +33,22 @@ object List {
     case (l, 0)  => l
     case (Cons(h, t), n) => drop(t, n - 1)
   }
+
+  def dropWhile[A](l: List[A], f: A => Boolean): List[A] = l match {
+    case Nil => Nil
+    case Cons(h, t) if f(h) => dropWhile(t, f)
+    // case Cons(h, t) if !f(h) => Cons(h, dropWhile(t, f)) more like filter
+    case Cons(h, t) if !f(h) => l
+  }
      
 }
 
 object Main {
+
+  def isOdd(n: Int): Boolean = {
+    n % 2 == 1
+  }
+  
   def main(args: Array[String]): Unit = {
     val intArray = List(1, 2, 3, 4, 5)
     val doubleArray = List(1.5, 2.0, 3.0)
@@ -44,7 +56,6 @@ object Main {
 
     val tailVariable = List.tail(intArray)
     println(s"The tail of intArray is: $tailVariable")
-
     val replacer: Int  = 6
     val replacedArray = List.setHead(intArray, replacer)
     println(s"Replaced the head of intArray with $replacer, got $replacedArray")
@@ -52,5 +63,11 @@ object Main {
     val dropQuantity: Int  = 2
     val droppedArray = List.drop(intArray, dropQuantity)
     println(s"Dropped the head of intArray  $dropQuantity times, got $droppedArray")
+
+    val filterFunction = isOdd
+    val filteredIntArray = List.dropWhile(intArray, filterFunction)
+    println(s"applied filterFunction to intArray, got $filteredIntArray")
+    
+    
   }
 }
