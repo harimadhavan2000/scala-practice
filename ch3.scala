@@ -23,6 +23,11 @@ object List {
     case Cons(_, t) => t
   }
 
+  def head[A](as: List[A]): A = as match {
+    case Nil => throw new IllegalArgumentException()
+    case Cons(h, _) => h
+  }
+
   def setHead[A](as: List[A], replacer: A): List[A] = as match {
     case Nil =>  Nil
     case Cons(h, t) => Cons(replacer, t)
@@ -78,6 +83,21 @@ object List {
   def product3(ns: List[Int]) = {
     foldLeft(ns, 1)(_ * _)
   }
+
+  def addOne(ns: List[Int]): List[Int] = ns match {
+    case Nil => Nil
+    case Cons(h, t) => Cons(h + 1, addOne(t))
+  }
+
+  def turnDoubletoString(ds: List[Double]): List[String]  = ds match {
+    case Nil => Nil
+    case Cons(h,t) => Cons(h.toString, turnDoubletoString(t))
+  }
+
+  def map[A, B](as: List[A])(f: A => B): List[B] = as match {
+    case Nil => Nil
+    case Cons(h, t) => Cons(f(h), map(t)(f))
+  }
      
 }
 
@@ -85,6 +105,10 @@ object Main {
 
   def isOdd(n: Int): Boolean = {
     n % 2 == 1
+  }
+
+  def square(n: Int): Int = {
+    n * n
   }
   
   def main(args: Array[String]): Unit = {
@@ -120,7 +144,16 @@ object Main {
 
     val pdt3Value = List.product3(intArray)
     println(s"Product of intArray using product3, is $pdt3Value")
-    
+
+    val addOneIntArray = List.addOne(intArray)
+    println(s"Adding one to each lmnt of intArray, is $addOneIntArray")
+
+    val doubleArraytoString = List.turnDoubletoString(doubleArray)
+    println(s"Converting each lmnt of doubleArray, is $doubleArraytoString")
+    println(List.head(doubleArraytoString).getClass)
+
+    val squaredArray = List.map(intArray)(square)
+    println(s"Squared the array intArray, got the value $squaredArray")
     
   }
 }
